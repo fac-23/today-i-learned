@@ -2,7 +2,7 @@
 
 ## What is TIL?
 
-[today-i-learned](https://today-i-learned-fac.vercel.app/) (Work in progress)
+[today-i-learned](https://today-i-learned-vert.vercel.app/) (Work in progress)
 
 TIL is a platform for sharing on-the-job developer learnings with FAC alumni. Sharing real life code examples on a personal blog or website is not always appropriate due to the private nature of production code, but sharing some details of actual code is important for learning. TIL is a secure environment to share code with FAC alumni, the site was built using Next.js static site generation, Shiki syntax highlighting and Github as a backend for versioning and storage.
 

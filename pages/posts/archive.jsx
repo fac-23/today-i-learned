@@ -5,6 +5,7 @@ import utilStyles from "../../styles/utils.module.css";
 import Date from "../../components/Date";
 import { useState } from "react";
 import CustomSelect from "../../components/Select";
+import CustomSearch from "../../components/Search";
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
@@ -47,6 +48,7 @@ export default function Archive({ allPostsData }) {
       <div className={utilStyles.container}>
         <h1>Archive</h1>
         <section style={{ minWidth: "35vw" }}>
+          <CustomSearch searchOptions={allPostsData}></CustomSearch>
           <section className={utilStyles.padBottom}>
             <label htmlFor="filter">Category: </label>
             <CustomSelect

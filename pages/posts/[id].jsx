@@ -66,7 +66,7 @@ export default function Post({ postData, githubEndpoint, markdownTitle }) {
             target="_blank"
             size="small"
             variant="contained"
-            href={`https://github.com/duckRabbitPy/duck-typed/blob/main/posts/${githubEndpoint}`}
+            href={`https://github.com/fac-23/today-i-learned/blob/main/posts/${githubEndpoint}`}
             sx={{ marginRight: "1rem", marginBottom: "0.5rem" }}
           >
             Update post on github

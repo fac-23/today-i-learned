@@ -83,7 +83,7 @@ export default function Home({ homePagePosts }) {
                 target="_blank"
                 size="small"
                 variant="outlined"
-                href="https://github.com/duckRabbitPy/TIL/upload/main/posts"
+                href="https://github.com/fac-23/today-i-learned/upload/main/posts"
               >
                 Upload .md file
               </Button>

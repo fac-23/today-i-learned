@@ -1,0 +1,100 @@
+.flexRowCenter {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+}
+
+.heading2Xl {
+  font-size: 2.5rem;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.05rem;
+  margin: 1rem 0;
+}
+
+.headingXl {
+  font-size: 2rem;
+  line-height: 1.3;
+  font-weight: 800;
+  letter-spacing: -0.05rem;
+  margin: 1rem 0;
+}
+
+.headingLg {
+  font-size: 1.5rem;
+  line-height: 1.4;
+  margin: 1rem 0;
+}
+
+.headingMd {
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+.borderCircle {
+  border-radius: 9999px;
+}
+
+.colorInherit {
+  color: inherit;
+}
+
+.padding1px {
+  padding-top: 1px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.listItem {
+  margin: 0 0 1rem;
+}
+
+.lightText {
+  color: #666;
+}
+
+.container {
+  max-width: 36rem;
+  padding: 0 1rem;
+  margin: 2rem auto 2rem;
+}
+
+.author {
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+  font-weight: bold;
+  padding: 0.2rem;
+  border-radius: 10%;
+  background-color: rgba(226, 226, 226, 0.842);
+}
+
+.label {
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+  font-weight: bold;
+  padding: 0.2rem;
+  border-radius: 10%;
+  background-color: rgba(250, 198, 163, 0.842);
+}
+
+.labelFlush {
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 0.2rem;
+  border-radius: 10%;
+  background-color: rgba(250, 198, 163, 0.842);
+}
+
+.tagline {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+}
+
+.padBottom {
+  padding-bottom: 1rem;
+}

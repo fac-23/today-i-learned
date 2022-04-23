@@ -1,35 +1,49 @@
 import Link from "next/link";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import Fuse from "fuse.js";
+import { borderRadius } from "@mui/system";
 
-const CustomSearch = ({ searchOptions }) => {
-  const [input, setInput] = useState("");
+const CustomSearch = ({ searchOptions, searchInput, setSearchInput }) => {
+  const options = {
+    includeScore: true,
+    keys: ["title", "author", "label"],
+  };
+
+  const fuse = new Fuse(searchOptions, options);
+
+  const fuzzySearchResult = fuse.search(searchInput);
 
   return (
     <>
-      <FaSearch />
-      <input
-        type="text"
-        value={input}
-        onInput={(e) => setInput(e.target.value)}
-      />
+      <div style={{ display: "flex", gap: "0.5rem" }}>
+        <FaSearch style={{ marginTop: "3px" }} />
+        <label for="fuzzySearch">Search</label>
+        <input
+          style={{ border: "1px solid hsl(0deg 0% 80%)", borderRadius: "3px" }}
+          name="fuzzySearch"
+          type="text"
+          value={searchInput}
+          onInput={(e) => setSearchInput(e.target.value)}
+        />
+      </div>
 
       <ul>
-        {searchOptions
-          .filter(({ id }) => {
-            return (
-              id.toLowerCase().search(input.toLowerCase()) !== -1 &&
-              input.length > 0
-            );
-          })
+        {fuzzySearchResult
+          .map((fuzzyResult) => fuzzyResult.item)
           .map(({ title, id }) => (
-            <li>
+            <li key={id}>
               <Link href={`/posts/${id}`}>
                 <a>{title}</a>
               </Link>
             </li>
           ))}
       </ul>
+      {fuzzySearchResult.length === 0 && searchInput ? (
+        <p>no search results found 😓</p>
+      ) : (
+        ""
+      )}
     </>
   );
 };

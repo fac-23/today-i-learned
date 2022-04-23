@@ -5,6 +5,7 @@ import utilStyles from "../../styles/utils.module.css";
 import Date from "../../components/Date";
 import { useState } from "react";
 import CustomSelect from "../../components/Select";
+import CustomSearch from "../../components/Search";
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
@@ -42,58 +43,70 @@ export default function Archive({ allPostsData }) {
 
   uniqueAuthors.unshift({ value: "all", label: "all" });
 
+  //fuzzysearch
+  const [searchInput, setSearchInput] = useState("");
+
   return (
     <Layout>
       <div className={utilStyles.container}>
         <h1>Archive</h1>
         <section style={{ minWidth: "35vw" }}>
-          <section className={utilStyles.padBottom}>
-            <label htmlFor="filter">Category: </label>
-            <CustomSelect
-              setCurrCategory={setCurrCategory}
-              id="filter"
-              selectOptions={uniqueOptions}
-            ></CustomSelect>
-          </section>
+          <CustomSearch
+            searchInput={searchInput}
+            setSearchInput={setSearchInput}
+            searchOptions={allPostsData}
+          ></CustomSearch>
+          {!searchInput && (
+            <section>
+              <section className={utilStyles.padBottom}>
+                <label htmlFor="filter">Category: </label>
+                <CustomSelect
+                  setCurrCategory={setCurrCategory}
+                  id="filter"
+                  selectOptions={uniqueOptions}
+                ></CustomSelect>
+              </section>
 
-          <section className={utilStyles.padBottom}>
-            <label htmlFor="filter">Author: </label>
-            <CustomSelect
-              setCurrCategory={setCurrAuthor}
-              id="filter"
-              selectOptions={uniqueAuthors}
-            ></CustomSelect>
-          </section>
+              <section className={utilStyles.padBottom}>
+                <label htmlFor="filter">Author: </label>
+                <CustomSelect
+                  setCurrCategory={setCurrAuthor}
+                  id="filter"
+                  selectOptions={uniqueAuthors}
+                ></CustomSelect>
+              </section>
 
-          <ul className={utilStyles.list}>
-            {allPostsData.map(({ id, date, title, label, author }) =>
-              (author === currAuthor || currAuthor === "all") &&
-              (label === currCategory || currCategory === "all") ? (
-                <li className={utilStyles.listItem} key={id}>
-                  <Link href={`/posts/${id}`}>
-                    <a>{title}</a>
-                  </Link>
-                  {label !== "unset" ? (
-                    <span className={utilStyles.label}>{label}</span>
+              <ul className={utilStyles.list}>
+                {allPostsData.map(({ id, date, title, label, author }) =>
+                  (author === currAuthor || currAuthor === "all") &&
+                  (label === currCategory || currCategory === "all") ? (
+                    <li className={utilStyles.listItem} key={id}>
+                      <Link href={`/posts/${id}`}>
+                        <a>{title}</a>
+                      </Link>
+                      {label !== "unset" ? (
+                        <span className={utilStyles.label}>{label}</span>
+                      ) : (
+                        ""
+                      )}
+                      {author !== "unset" ? (
+                        <span className={utilStyles.author}>{author}</span>
+                      ) : (
+                        ""
+                      )}
+
+                      <br />
+                      <small className={utilStyles.lightText}>
+                        <Date date={date}></Date>
+                      </small>
+                    </li>
                   ) : (
                     ""
-                  )}
-                  {author !== "unset" ? (
-                    <span className={utilStyles.author}>{author}</span>
-                  ) : (
-                    ""
-                  )}
-
-                  <br />
-                  <small className={utilStyles.lightText}>
-                    <Date date={date}></Date>
-                  </small>
-                </li>
-              ) : (
-                ""
-              )
-            )}
-          </ul>
+                  )
+                )}
+              </ul>
+            </section>
+          )}
         </section>
       </div>
     </Layout>

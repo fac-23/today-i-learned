@@ -1,5 +1,5 @@
 ---
-title: "typescript return types"
+title: "Typescript return types"
 date: "2022-04-24"
 label: "typescript"
 author: "Oli Jones"

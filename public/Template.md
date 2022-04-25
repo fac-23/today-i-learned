@@ -1,5 +1,5 @@
 ---
-title: "template-file"
+title: "template file"
 date: "yyyy-mm-dd"
 label: "topic"
 author: "your-name"

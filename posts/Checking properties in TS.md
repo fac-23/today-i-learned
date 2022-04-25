@@ -29,14 +29,32 @@ if ("prop" in myObj) {
 
 Example:
 
+Let's say we are sending a request to a poorly documented API which has an endpoint https:lazyapi.com/return-a-person-object/data 
+
+From the docs we know there is a property called `occupation` but we also think there is a propery called `role` in the person object although we're not sure. In our case we want to assign `roleInfo` to `role` if it exists or to `occupation` if it doesn't. This is a nice use case for using a type guard.
+
 ```ts
 export function logPerson(person: Person) {
-  let additionalInformation: string;
+  let roleInfo: string;
   if ("role" in person) {
-    additionalInformation = person.role;
+    roleInfo = person.role;
   } else {
-    additionalInformation = person.occupation;
+    roleInfo = person.occupation;
   }
-  console.log(` - ${person.name}, ${person.age}, ${additionalInformation}`);
+  console.log(` - ${person.name}, ${person.age}, ${roleInfo}`);
+}
+```
+
+or
+
+```ts
+export function logPerson(person: Person) {
+  let roleInfo: string;
+  if (person.hasOwnProperty("role")){
+    roleInfo = person.role;
+  } else {
+    roleInfo = person.occupation;
+  }
+  console.log(` - ${person.name}, ${person.age}, ${roleInfo}`);
 }
 ```

@@ -61,18 +61,18 @@ export function logPerson(person: Person) {
 
 Another good way to handle cases of possible non-existance is to use the <b>optional chaining</b> operator `?`
 
-Adding this to the end of an accessed property tells typescript the value might exist but it also might not, this will silence errors saying that your untyped object is definitely <b>missing<b> a property but it forces you to handle the possibility that it might not exist. This enforces a safer and more defensive style of working with external data.
+Adding this to the end of an accessed property tells typescript the value might exist but it also might not, this will silence errors saying that your untyped object is definitely <b>missing</b> a property but it forces you to handle the possibility that it might not exist. This enforces a safer and more defensive style of working with external data.
   
 e.g.
   
 ```ts
 export function logPersonLocation(person: Person) {
   const street = person.location?.town?.street;
+  const town = person.location?.town
   if(street){
   console.log(street);
   }
   else if (town) {
-  const town = person.location?.town
    console.log(town);
   }
   {

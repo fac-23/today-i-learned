@@ -3,7 +3,6 @@ import { useUser } from "@auth0/nextjs-auth0";
 import Header from "./Header";
 import utilStyles from "../styles/utils.module.css";
 import Image from "next/image";
-import FadeIn from "react-fade-in";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Container } from "@mui/material";
@@ -59,16 +58,15 @@ export default function Layout({ children, menu = false }) {
             margin: "3rem auto 6rem",
           }}
         >
-          <FadeIn>
-            <Image
-              priority
-              src="/images/TIL.svg"
-              className={utilStyles.borderCircle}
-              height={200}
-              width={200}
-              alt={"Today I learned logo"}
-            />
-          </FadeIn>
+          <Image
+            priority
+            src="/images/TIL.svg"
+            className={utilStyles.borderCircle}
+            height={200}
+            width={200}
+            alt={"Today I learned logo"}
+          />
+
           <ThemeProvider theme={theme}>
             <h1>Welcome to Today I Learned!</h1>
             <p>

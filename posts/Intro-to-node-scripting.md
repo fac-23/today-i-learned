@@ -11,8 +11,7 @@ FAC used to run workshops on this and Reuben usefully pointed me towards some go
 
 See below for some fully commented code that walks through a function that can execute a terminal command in a new shell, read the output and respond on the basis of the output.
 
-```ts
-import { exec } from "child_process";
+```ts import { exec } from "child_process";
 import util from "util";
 
 // general purpose function to run commands in new shell, returning stdout
@@ -23,15 +22,6 @@ async function runShellCommand(cmd: string): Promise<string> {
 
   const execPromise = util.promisify(exec);
   const processPromise = execPromise(cmd);
-
-  // the child property of processPromise is an instance of the ChildProcess module
-  const { child } = processPromise;
-
-  // log all stdout, stderr, error messages and exit code from child process
-  child.stdout.pipe(process.stdout);
-  child.stderr.pipe(process.stderr);
-  child.on("error", (Error) => process.stdout.write(`Error: ${Error.message}`));
-  child.on("exit", (code) => process.stdout.write(`exit code: ${code}`));
 
   // await completion of child_process.exec and return final stdout string
   const { stdout } = await processPromise;
@@ -50,6 +40,36 @@ runShellCommand("yarn knex migrate:list").then((result) => {
   }
 });
 ```
+
+### Walkthrough
+
+Your computer completes tasks and runs scripts on a process. `stdout` is the standard output of a process, it is the text we see when we run scripts in the terminal and it is very similar to the console.log function.
+
+My goal was to write a general purpose utility function that I could call to run shell commands in node and capture the logged result.
+
+To start with I imported `exec` and `util` from node:
+
+`exec` is a powerful function that when called spawns a new shell and runs a command inside a child process. A child process is a process created by another (parent process).
+
+```ts
+import { exec } from "child_process";
+import util from "util";
+```
+
+`util` has a method called `promisify` which is really nice way to make functions asynchronous. I needed this so that I would have a way to make the `exec` call asynchronous, ensuring the child process running the command has finished all tasks before returning the `stdout` result.
+
+```ts
+const execPromise = util.promisify(exec);
+const processPromise = execPromise(cmd);
+```
+
+So, now we have executed a command in a new shell and we have the promise of the result of this call in `processPromise`. Finally we have what we want!`processPromise.stdout` is the captured `stdout` from running our command 😊.
+
+```ts
+const { stdout } = await processPromise;
+```
+
+In our usecase we call this function every time we run the dev server, it runs `"yarn knex migrate:list"`, this function is returns a massive wall of text so having this show up every time we run the server is a pain, so instead we call `runShellCommand("yarn knex migrate:list")` to check if there have been database migrations and only show a warning message with `process.stdout.write` if the success message is not returned!
 
 ### Main learnings:
 

@@ -39,7 +39,7 @@ function getTableWidth(col: Column): React.CSSProperties {
 }
 ```
 
-Another use case is when your types are coming from a computer generated source. One of the cool features of GraphQl is that it can automatically generate types for your frontend/backend based on your database schema, these types may change as the schema is updated over time. As such it makes sense to add the generated type name as a return type, if any breaking changes are introduced typescript will warn us! The same prinicple holds true for external library functions and classes.
+Another use case is when your types are coming from a computer generated source. One of the cool features of GraphQL is that it can automatically generate types for your frontend/backend based on your database schema, these types may change as the schema is updated over time. As such it makes sense to add the generated type name as a return type, if any breaking changes are introduced typescript will warn us! The same prinicple holds true for external library functions and classes.
 
 ### Main learnings:
 

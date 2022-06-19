@@ -9,14 +9,14 @@ The first problem I ran into when converting a React App to typescript was the c
 
 This is because I was passing down a prop into a child component, but the child parameter was not typed.
 
-The solution: add an interface for the child component props parameter!
-
 ```tsx
 //index.tsx
 <Date date={date}></Date>
 ```
 
-Rewriting the Date functional component with arrow function syntax was a nice way to make the function parameter type clear
+### The solution
+
+Add an interface for the child component props parameter! Rewriting the Date functional component with arrow function syntax was a nice way to make the function parameter type clear.
 
 ```tsx
 //Date.tsx
@@ -25,18 +25,31 @@ interface Props {
 }
 const Date = (props: Props) => {
   const date = parseISO(props.date);
-  return <time dateTime={props.date}>{format(date, "LLLL d, yyyy")}</time>;
+  return <Time dateTime={props.date}>{format(date, "LLLL d, yyyy")}<Ttime>;
 };
 
 export default Date;
 ```
 
-Later on I found that this issue is avoided if you rely on destructuring syntax for your props. Typescript is then able to infer that date is a property on the prop object.
+### Destructuring props
+
+A common react pattern is to destructure multiple props, so you can immediately use a variable and don't have to write `props.xyz`. Writing a Props interface or type works well for this too, as writing all these types inline would be difficult to read.
 
 ```tsx
- const Date = ({date})) => {
+interface commentProps {
+  date: string;
+  comment: string;
+  likes: number;
+  private: boolean;
+
+}
+
+ const  = ({date, comment, likes, private}: commentProps) => {
   const date = parseISO(date);
-  return <time dateTime={date}>{format(date, "LLLL d, yyyy")}</time>;
-};
+  if(!private){
+  return<Comment dateTime={date}><div>{comment}</div><div>{likes}</div></Comment>;
+  }
+  return <p>You do not have permission to see this post</p>
+  };
 
 ```

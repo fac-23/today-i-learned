@@ -73,6 +73,8 @@ Let's have a look at some of the backend code. The goal for the GraphQL API is t
 
 It is the job of the backend/API developer to write functions in a way to correctly serve up the data that is requested. These are called `resolver` functions that must return data that is described in the schema. Resolvers typically interact with the database to actually retrieve the data and this could be with SQL, Postgres, Mongo and a whole range of database query languages, GraphQL does not _directly_ interact with the database and does not replace these (yet).
 
+In this simple example, getCompletedState() gets all the data for all fields, but only be the specified fields will be returned in the HTTP response. 
+
 ```tsx
 //resolvers.ts
 export const resolvers = {
@@ -96,21 +98,9 @@ export async function getCompletedState() {
 }
 ```
 
-### Ok but why?
-
-New devs are probably familar with REST APIs, REST is a comparative and effective method for collecting data. In this instance I could set up a route called /TodayProgress and set up my server such that hitting this route will return a JSON object with all the data I want.
-
-So if I can achieve the same thing with good old fashioned REST as I can wih GraphQL, what is the benefit of GraphQL?
-
-Well lets imagine there is a great amount of variation in the number of fields we want, sometimes it's just the `id` other times it's `id, name, occupation, complete` and oftentimes it is dozens of fields. For REST this introduces the problem of overfetching. You have a route that always returns the same JSON. If you are are the producer and consumer of the data this can be remedied by creating some more routes or adding URL parameters for filtering. But what if you are just a consumer i.e. you don't own or have any influence on the API? Often you will be getting back large blobs of predefined JSON and then having to pick out the bits that you need on the client side.
-
-This could lead to all sorts of mapping, filtering, sorting, and Object.keys() fun happening in the client code, just to get the data in the right shape.
-
-GraphQL helps tackle that problem, and it is very nice for people writing frontend clientside code. They can simply define the fields that they want, send the request to a single endpoint, and the data should come back exactly as they want it.
-
 ### Variables
 
-In addition GraphQL allows for the use of variables in your query, combining several variables together proves to be an extremely powerful way to filter data and only return what is needed.
+In addition GraphQL allows for the use of variables in your query, combining several variables together proves to be an extremely powerful way to filter data and only return what is needed. Good resolver design can limit number of database querie efficiently reducing overfecthing.
 
 ```tsx
 export async function updateDayProgress(habit: string, complete: boolean) {
@@ -140,6 +130,20 @@ export async function updateDayProgress(habit: string, complete: boolean) {
   return await jsonResponse.json().then((res) => res.data.updateDayProgress);
 }
 ```
+
+
+### Ok but why?
+
+New devs are probably familar with REST APIs, REST is a comparative and effective method for collecting data. In this instance I could set up a route called /TodayProgress and set up my server such that hitting this route will return a JSON object with all the data I want.
+
+So if I can achieve the same thing with good old fashioned REST as I can wih GraphQL, what is the benefit of GraphQL?
+
+Well lets imagine there is a great amount of variation in the number of fields we want, sometimes it's just the `id` other times it's `id, name, occupation, complete` and oftentimes it is dozens of fields. For REST this introduces the problem of overfetching. You have a route that always returns the same JSON. If you are are the producer and consumer of the data this can be remedied by creating some more routes or adding URL parameters for filtering. But what if you are just a consumer i.e. you don't own or have any influence on the API? Often you will be getting back large blobs of predefined JSON and then having to pick out the bits that you need on the client side.
+
+This could lead to all sorts of mapping, filtering, sorting, and Object.keys() fun happening in the client code, just to get the data in the right shape.
+
+GraphQL helps tackle that problem, and it is very nice for people writing frontend clientside code. They can simply define the fields that they want, send the request to a single endpoint, and the data should come back exactly as they want it.
+
 
 ### Stitching APIs
 

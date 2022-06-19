@@ -15,7 +15,7 @@ GraphQL is query langauge. The langauge provides a structured, typed and agreed 
 
 Queries are used to collect data, Mutations are used to update, delete or add data.
 
-A GraphQL API server is configured such that it has a single HTTP endpoint `/grapql` that receives a request with a query string as a payload in the request body. All GraphQL requests are `POST` requests, even if purely fetching data.
+A GraphQL API server is configured such that it has a single HTTP endpoint `/graphql` that receives a request with a query string as a payload in the request body. All GraphQL requests are `POST` requests, even if purely fetching data.
 
 Here is an example of a request asking for data from four fields `id, habit, complete, label`.
 

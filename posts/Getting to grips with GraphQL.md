@@ -11,7 +11,7 @@ So what is GraphQL?
 
 Despite reading some introductory blogs and podcasts it took me a while to understand what GraphQL actually is, this is because when people talk about GraphQL they are often referring to the GraphQL ecosystem which includes a range of technologies and tools that help support the use of GraphQL such as `Apollo, GraphiQL and PostGraphile`.
 
-GraphQL is query langauge. The langauge provides a structured, typed and agreed upon way to ask for data or mutate data on a server. GraphQL has an open specification which means that you can send a GraphQL query, or create a GraphQL server in many languages such as Python, Go or JavaScript.
+GraphQL is a query langauge. The langauge provides a structured, typed and agreed upon way to ask for data or mutate data on a server. GraphQL has an open specification which means that you can send a GraphQL query, or create a GraphQL server in many languages such as Python, Go or JavaScript.
 
 Queries are used to collect data, Mutations are used to update, delete or add data.
 
@@ -73,7 +73,7 @@ Let's have a look at some of the backend code. The goal for the GraphQL API is t
 
 It is the job of the backend/API developer to write functions in a way to correctly serve up the data that is requested. These are called `resolver` functions that must return data that is described in the schema. Resolvers typically interact with the database to actually retrieve the data and this could be with SQL, Postgres, Mongo and a whole range of database query languages, GraphQL does not _directly_ interact with the database and does not replace these (yet).
 
-In this simple example, getCompletedState() gets all the data for all fields, but only be the specified fields will be returned in the HTTP response. 
+In this simple example, getCompletedState() gets all the data for all fields, but only the specified fields will be returned in the HTTP response. 
 
 ```tsx
 //resolvers.ts
@@ -100,7 +100,7 @@ export async function getCompletedState() {
 
 ### Variables
 
-In addition GraphQL allows for the use of variables in your query, combining several variables together proves to be an extremely powerful way to filter data and only return what is needed. Good resolver design can limit number of database querie efficiently reducing overfecthing.
+In addition GraphQL allows for the use of variables in your query, combining several variables together proves to be an extremely powerful way to filter data and only return what is needed. Good resolver design can limit number of database queries efficiently, reducing overfecthing.
 
 ```tsx
 export async function updateDayProgress(habit: string, complete: boolean) {

@@ -25,9 +25,7 @@ We have the issue that users may upload date data in many different formats, som
 
 The UI for this looks like this:
 
-
-
-
+<img width="612" alt="Screenshot 2022-09-06 at 17 16 45" src="https://user-images.githubusercontent.com/78092825/188687584-384b739f-ab6c-4667-b0b9-918a1cec5d6c.png">
 
 
 The standardiseDates function stores valid dates as standardised ISOstrings. Invalid dates are still stored unchanged as strings in the database but are not rendered on the frontend.

@@ -81,10 +81,7 @@ function parseSupportedFormat(dateString: string) {
   }).filter(Boolean)[0];
 
   return date;
-}
-
-
-```
+}```
 
 The entire time I was working on this project I had a fear that the code was not correct, it was hard testing using the UI as the upload process took a while and knowing of the offsets were being correctly applied was difficult.
 
@@ -93,8 +90,6 @@ So in this instance I decided to write some unit tests with Jest to put my mind 
 This is what the jest tests looked like:
 
 ```ts
-
-
 describe('csv date upload', () => {
   it('Unsupported format', async () => {
     expect(testUpload('20-Jul-2022', undefined)).toEqual('20-Jul-2022');
@@ -130,9 +125,3 @@ describe('csv date upload', () => {
 ```
 
 On reflection all of this would be much easier if we had some form of frontend validation and contraint on what we allow users to upload, but it's been a good introduction to a tricky topic that has taught me the value of front and backend validation, standardisation and testing.
-
-
-
-````
-
-

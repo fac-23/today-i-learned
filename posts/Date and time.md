@@ -9,26 +9,25 @@ author: "Oli Jones"
 ### Main learnings:
 
 - Timezone information can be critical for users
-- Considering serverside versus Clientside use of Date.now()
+- Considering serverside versus clientside use of Date.now()
 - Constraining or defining upload data format can be useful
-- Integration testing
+- Integration testing with Jest
 
 
-
-Our application allows users to upload data into our platform using CSV data. To start with were as flexible as possible and permitted users to upload any string into our datetime column without validation. It would be parsed using new Date() and if new Date() yeilded a date object we would render that date.
+Our application allows users to upload data into our platform using CSV data. To start with we were as flexible as possible and permitted users to upload any string into our datetime column without validation. It would be parsed using `new Date()` and if `new Date()` yeilded a date object we would render that date.
 
 - The problem:
 
-The timezone information in the `date` object obtained by calling the Date constructor is determined by the physical location of where the code running your Javascript is located (e.g. your browser versus some server in the US). This applies to Date.now() but also when using other methods such as parsing dates. 
+The timezone information in the `date` object obtained by calling the Date constructor is determined by the physical location of where the code running your Javascript (e.g. your browser versus or some server anywhere in the world). This applies to `Date.now()` but also when using other methods for parsing dates. 
 
-We have the issue that users may upload date data in many different formats, some of which won't contain timezone information and some which may be nonsense. In cases such as these we want to default times to UTC+00 which is also known as Greenwich meantime (GMT) but also give users the option to choose the local time in their browser.
+We had the issue that users could upload date data in many different formats, some of which didn't contain timezone information and some which may have been nonsense. In cases such as these we want to default timezones to UTC+00 which is also known as Greenwich meantime (GMT) but also give users the option to choose the local time in their browser.
 
-The UI for this looks like this:
+The UI for this proposal looked like this:
 
 <img width="612" alt="Screenshot 2022-09-06 at 17 16 45" src="https://user-images.githubusercontent.com/78092825/188687584-384b739f-ab6c-4667-b0b9-918a1cec5d6c.png">
 
 
-The standardiseDates function stores valid dates as standardised ISOstrings. Invalid dates are still stored unchanged as strings in the database but are not rendered on the frontend.
+The `standardiseDates` function stores valid dates as standardised ISOstrings. It utilises the `date-fns-tz` package which enabled me to convert date object dates to different timezones. Following a timezone conversion, dates were checked for validity against our supported date formats. Invalid dates were still stored unchanged as strings in the database but will not be rendered on the frontend.
 
 ```ts
 
@@ -85,14 +84,11 @@ function parseSupportedFormat(dateString: string) {
 }
 
 
-
-
 ```
 
 The entire time I was working on this project I had a fear that the code was not correct, it was hard testing using the UI as the upload process took a while and knowing of the offsets were being correctly applied was difficult.
 
 So in this instance I decided to write some unit tests with Jest to put my mind at ease, this was worthwhile and helped me cover all areas. This was a great way to test a pure function and didn't take long at all.
-
 
 This is what the jest tests looked like:
 
@@ -133,20 +129,7 @@ describe('csv date upload', () => {
 
 ```
 
-On relfection all of this would be much easier if we had some form of frontend validation and contraint on what we allow users to upload, but it's been a good introduction to a tricky topic that has taught me the value of front and backend validation, standardisation and testing.
-
-
-
-
-
-
-
-
-
-
-
-
-
+On reflection all of this would be much easier if we had some form of frontend validation and contraint on what we allow users to upload, but it's been a good introduction to a tricky topic that has taught me the value of front and backend validation, standardisation and testing.
 
 
 
